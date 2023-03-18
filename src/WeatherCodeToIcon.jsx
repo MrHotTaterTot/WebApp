@@ -1,5 +1,4 @@
 import { useState, useEffect } from "preact/hooks";
-import {svgAssets} from "./assets.js";
 
 
 const weatherCodeToIcon = {
@@ -47,8 +46,7 @@ export function WeatherCodeToIcon(props) {
 
     return (
         <div>
-            {/*<img src={svgIcons[`./${getWeatherIconName(weatherCode)}`].default} alt="weather icon" />*/}
-            {JSON.stringify(svgAssets)}
+            <img src={`/Icons/${getWeatherIconName(weatherCode)}`} alt="Weather icon" />
         </div>
     );
 }
