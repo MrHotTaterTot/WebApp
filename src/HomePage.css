@@ -1,63 +1,40 @@
-.weather-search-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+body {
+    font-family: "Lato", sans-serif;
 }
 
-
-.weather-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-}
-
-.weather-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
-    text-align: center;
-    background-color: #f0f0f0;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    width: 80%;
-    margin-top: 1rem;
-}
-
-.weather-info p {
-    margin: 0;
-}
-
-.icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon {
-    font-size: 2rem;
-}
-
-.app-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.sidebar {
     height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
 }
 
-.side-bar {
-    /* Add any necessary styles for your sidebar */
-    width: 25%;
-    min-width: 200px;
-    height: 100%;
-    background-color: #f0f0f0;
-    box-sizing: border-box;
+.sidebar a, .sidebar li {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    cursor: pointer;
+}
+
+.sidebar a:hover, .sidebar li:hover {
+    color: #f1f1f1;
 }
 
 .content-container {
-    flex-grow: 1;
-    padding: 16px;
-    width: 75%;
-    box-sizing: border-box;
+    margin-left: 200px;
+    font-size: 20px;
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+    .sidebar li {font-size: 18px;}
 }

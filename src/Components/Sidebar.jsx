@@ -29,6 +29,7 @@ const SideBar = forwardRef(({ onCitySelect, addCityToHistory }, ref) => {
                 ))}
             </ul>
         </div>
+
     );
 });
 
