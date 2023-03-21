@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-
+import './Icon.css'
 
 const weatherCodeToIcon = {
     0: "Sun",

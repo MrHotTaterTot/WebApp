@@ -1,0 +1,4 @@
+img {
+    width: 100%; /* Make the icon fill the container */
+    height: auto; /* Maintain the aspect ratio */
+}

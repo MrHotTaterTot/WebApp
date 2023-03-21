@@ -1,7 +1,8 @@
 // SideBar.jsx
-import './CSS/SideBar.css';
+import './SideBar.css';
 import {forwardRef, useImperativeHandle} from "preact/compat";
 import {useState} from "preact/hooks";
+import {Link} from "preact-router";
 
 const SideBar = forwardRef(({ onCitySelect, addCityToHistory }, ref) => {
     const [searchHistory, setSearchHistory] = useState([]);
@@ -18,8 +19,21 @@ const SideBar = forwardRef(({ onCitySelect, addCityToHistory }, ref) => {
         onCitySelect(cityName);
     };
 
+
     return (
         <div className="sidebar">
+            <h2>Water Sports</h2>
+            <ul>
+                <li>
+                    <Link activeClassName="active" href="/surfing">Surfing</Link>
+                </li>
+                <li>
+                    <Link activeClassName="active" href="/sailing">Sailing</Link>
+                </li>
+                <li>
+                    <Link activeClassName="active" href="/Users/smich/WebstormProjects/WebApp/src/pages/Jetskiing/Jetskiing">Jetskiing</Link>
+                </li>
+            </ul>
             <h2>Search History</h2>
             <ul>
                 {searchHistory.map((cityName, index) => (
@@ -29,7 +43,6 @@ const SideBar = forwardRef(({ onCitySelect, addCityToHistory }, ref) => {
                 ))}
             </ul>
         </div>
-
     );
 });
 
