@@ -1,13 +1,12 @@
-import { useState } from 'preact/hooks'
+
 import './app.css'
-import WeatherData from './WeatherData'
+import HomePage from './HomePage.jsx'
 
 export function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <WeatherData />
+      <HomePage />
     </>
   )
 }

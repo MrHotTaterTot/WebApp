@@ -1,0 +1,63 @@
+.weather-search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.weather-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    margin-top: 1rem;
+}
+
+.weather-info p {
+    margin: 0;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.side-bar {
+    /* Add any necessary styles for your sidebar */
+    width: 25%;
+    min-width: 200px;
+    height: 100%;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+.content-container {
+    flex-grow: 1;
+    padding: 16px;
+    width: 75%;
+    box-sizing: border-box;
+}
