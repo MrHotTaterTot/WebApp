@@ -6,6 +6,7 @@ const SearchBar = ({ onSearch }) => {
     const handleSearch = (e) => {
         e.preventDefault();
         onSearch(search);
+        setSearch(''); // Clear the input field after search
     };
 
     return (

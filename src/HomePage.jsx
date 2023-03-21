@@ -1,21 +1,22 @@
-import {useEffect, useState} from 'preact/hooks'
-import axios from 'axios'
-import {WeatherCodeToIcon} from "./WeatherCodeToIcon";
+
+import { useEffect, useState } from 'preact/hooks';
+import { createRef } from 'preact/compat';
+import axios from 'axios';
+import { WeatherCodeToIcon } from "./WeatherCodeToIcon";
 import SearchBar from "./Components/SearchBar.jsx";
 import SideBar from './Components/SideBar.jsx';
-import { createRef } from 'preact';
-
 
 
 
 export function HomePage() {
-    const [weather, setWeather] = useState(null)
-    const [city, setCity] = useState(null)
+    const [weather, setWeather] = useState(null);
+    const [city, setCity] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [searchHistory, setSearchHistory] = useState([]);
     const sideBarRef = createRef();
 
     useEffect(() => {
-        fetchWeatherandCity()
+        fetchWeatherandCity() // Fetch weather and city on page load
 
     }, []);
 
@@ -34,10 +35,15 @@ export function HomePage() {
 
             setWeather({ weatherData });
             setCity({ cityName });
+
+            if (sideBarRef.current) {
+                sideBarRef.current.addCityToHistory(cityName);
+            }
         } catch (error) {
             console.log(error);
         }
     };
+
 
     const getCityCoordinates = async (search) => {
         const apiKey = '7eda583d5e1f44839ca8a8e651e66eec';
@@ -56,7 +62,9 @@ export function HomePage() {
         return { latitude: lat, longitude: lng };
     };
 
-
+    const addCityToHistory = (cityName) => {
+        sideBarRef.current.addCityToHistory(cityName);
+    };
 
     const searchCity = async (search) => {
         try {
@@ -68,12 +76,15 @@ export function HomePage() {
             setCity({ cityName });
             setErrorMessage(""); // Clear any previous error messages
 
-            sideBarRef.current.addCityToHistory(cityName);
+            if (sideBarRef.current) {
+                sideBarRef.current.addCityToHistory(cityName);
+            }
         } catch (error) {
             setErrorMessage(error.message);
             console.log(error);
         }
     };
+
 
 
     const getCurrentPosition = () => {
@@ -132,9 +143,7 @@ export function HomePage() {
             throw new Error('No results found for the provided coordinates.');
         }
 
-        const cityName = response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village;
-
-        return cityName;
+        return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village;
     };
 
 
@@ -184,7 +193,7 @@ export function HomePage() {
 
     return (
         <div className="app-container">
-            {/*<SideBar ref={sideBarRef} onCitySelect={(cityName) => searchCity(cityName)} />*/}
+            <SideBar ref={sideBarRef} onCitySelect={(cityName) => searchCity(cityName)} addCityToHistory={addCityToHistory} />
             <div className="content-container">
                 <div className="weather-search-container">
                     <SearchBar onSearch={(search) => searchCity(search)} />

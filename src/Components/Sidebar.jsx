@@ -1,14 +1,18 @@
-import { useState } from 'preact/hooks';
+// SideBar.jsx
 import './CSS/SideBar.css';
+import {forwardRef, useImperativeHandle} from "preact/compat";
+import {useState} from "preact/hooks";
 
-export function SideBar({ onCitySelect }) {
+const SideBar = forwardRef(({ onCitySelect, addCityToHistory }, ref) => {
     const [searchHistory, setSearchHistory] = useState([]);
 
-    const addCityToHistory = (cityName) => {
-        if (!searchHistory.includes(cityName)) {
-            setSearchHistory([...searchHistory, cityName]);
-        }
-    };
+    useImperativeHandle(ref, () => ({
+        addCityToHistory(cityName) {
+            if (!searchHistory.includes(cityName)) {
+                setSearchHistory([...searchHistory, cityName]);
+            }
+        },
+    }));
 
     const selectCityFromHistory = (cityName) => {
         onCitySelect(cityName);
@@ -26,6 +30,6 @@ export function SideBar({ onCitySelect }) {
             </ul>
         </div>
     );
-}
+});
 
 export default SideBar;
