@@ -14,7 +14,8 @@ body {
     padding-top: 20px;
 }
 
-.sidebar a, .sidebar li {
+.sidebar a,
+.sidebar li {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 20px;
@@ -23,7 +24,8 @@ body {
     cursor: pointer;
 }
 
-.sidebar a:hover, .sidebar li:hover {
+.sidebar a:hover,
+.sidebar li:hover {
     color: #f1f1f1;
 }
 
@@ -34,7 +36,31 @@ body {
 }
 
 @media screen and (max-height: 450px) {
-    .sidebar {padding-top: 15px;}
-    .sidebar a {font-size: 18px;}
-    .sidebar li {font-size: 18px;}
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+
+    .sidebar li {
+        font-size: 18px;
+    }
+}
+
+.side-bar {
+    /* Add any necessary styles for your sidebar */
+    /* width: 25%; */
+    min-width: 200px;
+    height: 100%;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+.content-container {
+    flex-grow: 1;
+    padding: 16px;
+    width: 75%;
+    box-sizing: border-box;
 }

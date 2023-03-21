@@ -7,6 +7,7 @@ import SearchBar from "./Components/SearchBar.jsx";
 import SideBar from './Components/SideBar.jsx';
 
 
+import './HomePage.css'
 
 export function HomePage() {
     const [weather, setWeather] = useState(null);
