@@ -1,14 +1,15 @@
-import { Router, Route } from 'preact-router';
 import { useState, useEffect } from 'preact/hooks';
+import axios from "axios";
+import WeatherDataContext from "./WeatherDataContext";
+
+import { Router, Route } from 'preact-router';
 import Surfing from "./pages/Surfing/Surfing.jsx";
 import Sailing from "./pages/Sailing/Sailing.jsx";
 import Jetskiing from "./pages/Jetskiing/Jetskiing.jsx";
 import Swimming from "./pages/Swimming/Swimming.jsx";
 import HomePage from "./Components/HomePage/HomePage.jsx";
-import SideBar from "./Components/SideBar/SideBar.jsx";
 import SearchBar from "./Components/SearchBar/SearchBar.jsx";
-import WeatherDataContext from "./WeatherDataContext";
-import axios from "axios";
+import TopBar from "./Components/TopBar/TopBar.jsx";
 
 function App() {
     const [weather, setWeather] = useState(null);
@@ -135,19 +136,18 @@ function App() {
 
     return (
         <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
-            <div className="app-container">
-                <SideBar />
-                <div className="content-container">
-                    <SearchBar onSearch={(search) => searchCity(search)} />
-                    {errorMessage && <p className="error-message">{errorMessage}</p>}
-                    <Router>
-                        <HomePage path="/" />
-                        <Surfing path="/surfing" />
-                        <Sailing path="/sailing" />
-                        <Jetskiing path="/jetskiing" />
-                        <Swimming path="/swimming" />
-                    </Router>
-                </div>
+            <TopBar></TopBar>
+
+            <div className="content-container">
+                <SearchBar onSearch={(search) => searchCity(search)} />
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <Router>
+                    <HomePage path="/" />
+                    <Surfing path="/surfing" />
+                    <Sailing path="/sailing" />
+                    <Jetskiing path="/jetskiing" />
+                    <Swimming path="/swimming" />
+                </Router>
             </div>
         </WeatherDataContext.Provider>
     );
