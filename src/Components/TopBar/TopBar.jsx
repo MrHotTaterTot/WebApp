@@ -19,7 +19,7 @@ function TopBar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        My App
+                        Top Bar
                     </Typography>
                     <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer}>
                         <MenuIcon />

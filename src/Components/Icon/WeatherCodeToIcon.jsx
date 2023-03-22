@@ -45,7 +45,7 @@ export function WeatherCodeToIcon(props) {
     };
 
     return (
-        <div>
+        <div style={{width: '200px'}}>
             <img src={`/Icons/${getWeatherIconName(weatherCode)}`} alt="Weather icon" />
         </div>
     );

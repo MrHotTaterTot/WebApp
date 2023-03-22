@@ -139,8 +139,6 @@ function App() {
             <TopBar></TopBar>
 
             <div className="content-container">
-                <SearchBar onSearch={(search) => searchCity(search)} />
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <Router>
                     <HomePage path="/" />
                     <Surfing path="/surfing" />

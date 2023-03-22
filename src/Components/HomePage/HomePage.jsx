@@ -2,6 +2,7 @@ import { useContext } from 'preact/hooks';
 import WeatherDataContext from "../../WeatherDataContext";
 import {WeatherCodeToIcon} from "../Icon/WeatherCodeToIcon";
 import './HomePage.css'
+import WeatherInfo from "./WeatherInfo.jsx";
 
 export function HomePage() {
     const { weather, city } = useContext(WeatherDataContext);
@@ -23,32 +24,15 @@ export function HomePage() {
         const _waveHeight = _data.marine.hourly.wave_height[0];
 
         return (
-            <div className="weather-container">
-                <h1>{_city}</h1>
-                <div className="weather-info">
-                    <div className="weather-main">
-                        <p>{_temp}°C</p>
-                        <div className="icon-container">
-                            <WeatherCodeToIcon weatherCode={_weatherCode} />
-                        </div>
-                    </div>
-                    <div className="weather-details">
-                        <div className="weather-details-column">
-                            <p>Humidity: {_humidity}%</p>
-                            <p>Feels like: {_apparentTemp}°C</p>
-                            <p>Precipitation Probability: {_precipitationProbability}%</p>
-                            <p>Precipitation: {_precipitation} mm</p>
-                        </div>
-                        <div className="weather-details-column">
-                            <p>Visibility: {_visibility} m</p>
-                            <p>Wind Speed: {_windSpeed} mph</p>
-                            <p>Wind Direction: {_windDirection}°</p>
-                            <p>Wind Gusts: {_windGusts} mph</p>
-                            <p>Wave Height: {_waveHeight} m</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <WeatherInfo
+                city={_city}
+                temperature={_temp}
+                humidity={_humidity}
+                weatherCode={_weatherCode}
+                windSpeed={_windSpeed}
+                windDirection={_windDirection}
+                waveHeight={_waveHeight}
+            ></WeatherInfo>
         );
 
     }
