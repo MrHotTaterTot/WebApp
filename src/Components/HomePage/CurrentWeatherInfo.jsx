@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {WeatherCodeToIcon} from "../Icon/WeatherCodeToIcon.jsx";
-
+import './CurrentWeatherInfo.css';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -18,22 +18,31 @@ function CurrentWeatherInfo({ city, temperature, humidity, weatherCode, windSpee
 
     return (
         <div className="weather-info">
-            <div style={{width: "200px"}}>
-                <WeatherCodeToIcon weatherCode={weatherCode}/>
+            <div className="weather-icon">
+                <WeatherCodeToIcon weatherCode={weatherCode} />
             </div>
 
-            <p style={{fontSize: "30px", marginTop: "-10px", fontWeight: "normal"}}>{city}</p>
-            <p style={{fontSize: "50px", marginTop: "-20px", fontWeight: "normal"}}>{temperature}°C</p>
+            <p className="city-name">{city}</p>
+            <p className="temperature">{temperature}°C</p>
 
-            <p style={{fontSize: "30px", marginTop: "-40px", fontWeight: "normal"}}>
+            <div className="wind-info">
                 {windSpeed} kts
-                <svg viewBox="0 0 24 24" width={24} height={24} style={{ transform: `rotate(${windDirection}deg)` }}>
-                    <path fill="currentColor" d="M5.414 10H18a1 1 0 0 1 0 2H5.414l4.293 4.293a1 1 0 1 1-1.414 1.414l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 1 1 1.414 1.414L5.414 10z" />
+                <svg
+                    viewBox="0 0 24 24"
+                    width={24}
+                    height={24}
+                    style={{ transform: `rotate(${windDirection}deg)` }}
+                >
+                    <path
+                        fill="currentColor"
+                        d="M5.414 10H18a1 1 0 0 1 0 2H5.414l4.293 4.293a1 1 0 1 1-1.414 1.414l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 1 1 1.414 1.414L5.414 10z"
+                    />
                 </svg>
-            </p>
+            </div>
 
-            <p style={{fontSize: "20px", marginTop: "-20px", fontWeight: "normal"}}>Wave Height: {waveHeight}</p>
+            <p className="wave-height">Wave Height: {waveHeight}</p>
         </div>
+
     );
 }
 

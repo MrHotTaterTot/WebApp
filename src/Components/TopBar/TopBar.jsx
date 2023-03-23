@@ -69,17 +69,24 @@ function TopBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" style={{ flexGrow: 1 , marginRight: 12}}>
-                        {formatDate()}
                     </Typography>
                     <SearchBar onSearch={async (city) => {
                         await HistoryCtx.searchCity(city)
                     }} />
                 </Toolbar>
             </AppBar>
-            <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
-                <Paper style={{ width: 300 }}>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={handleDrawerClose}
+                classes={{ paper: 'drawer-paper' }} // Add this line
+            >
+                <Paper style={{ width: '100%', height: '100%' }}>
                     <List>
-                        <Typography variant="h6" className="divider-label">
+                        <Typography
+                            variant="h6"
+                            className="divider-label typography-margin" // Add the typography-margin class
+                        >
                             Web Pages
                         </Typography>
                         <Link activeClassName="active" href="/">
@@ -109,7 +116,10 @@ function TopBar() {
                         </Link>
                     </List>
                     <Divider />
-                    <Typography variant="h6" className="divider-label">
+                    <Typography
+                        variant="h6"
+                        className="divider-label typography-margin" // Add the typography-margin class
+                    >
                         Search History
                     </Typography>
 

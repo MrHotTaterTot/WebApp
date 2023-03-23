@@ -4,3 +4,21 @@
     margin: 10px 15px;
     color: #333;
 }
+/* Styles for the Drawer */
+.drawer-paper {
+    width: 50vw;
+    height: 100vh;
+    background-color: black;
+}
+
+/* Styles for Typography */
+.typography-margin {
+    margin-left: 16px;
+}
+
+/* Active link styles */
+.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+

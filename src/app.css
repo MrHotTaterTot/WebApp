@@ -8,3 +8,13 @@
     height: 100%;
     background: #1C1B1F;
 }
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: "Roboto Thin";
+    font-weight: normal;
+    background: #1C1B1F;
+    color: #eee;
+}

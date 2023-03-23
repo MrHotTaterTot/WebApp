@@ -94,54 +94,58 @@ export function HomePage() {
 
         return (
             <>
-                <CurrentWeatherInfo
-                    city={city.cityName}
-                    temperature={weather.weatherData.temp[curr]}
-                    humidity={weather.weatherData.humidity[curr]}
-                    weatherCode={weather.weatherData.weatherCode[curr]}
-                    windSpeed={weather.weatherData.windSpeed[curr]}
-                    windDirection={weather.weatherData.windDirection[curr]}
-                    waveHeight={weather.weatherData.waveHeight[curr]}
-                ></CurrentWeatherInfo>
+                <div className="weather-container">
+                    <CurrentWeatherInfo
+                        city={city.cityName}
+                        temperature={weather.weatherData.temp[curr]}
+                        humidity={weather.weatherData.humidity[curr]}
+                        weatherCode={weather.weatherData.weatherCode[curr]}
+                        windSpeed={weather.weatherData.windSpeed[curr]}
+                        windDirection={weather.weatherData.windDirection[curr]}
+                        waveHeight={weather.weatherData.waveHeight[curr]}
+                        className="current-weather-info"
+                    />
+                </div>
 
-                <h1 style={{textAlign: "center", color: "white"}}>{currentDate.toDateString()}</h1>
+                <p className="date">{currentDate.toDateString()}</p>
 
                 <FutureWeatherInfo
                     from={curr0}
                     to={currentPage === 1 ? endIndex0 : curr + 24}
                     data={weather.weatherData}
-                ></FutureWeatherInfo>
+                    className="future-weather-info"
+                />
 
-                <div>
-                    <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
-                        <Grid item style={{ marginLeft: "16px", marginRight: "16px" }}>
-                            <Pagination
-                                count={pages}
-                                page={currentPage}
-                                onChange={(e, page) => {
-                                    setCurrentDate(
-                                        new Date(startDay.getTime() + (page - 1) * 24 * 60 * 60 * 1000)
-                                    );
-                                    setCurrentPage(page);
-                                }}
-                                color="primary"
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        {...item}
-                                        label={dateStrings[item.page - 1]}
-                                        onClick={() => {
-                                            setCurrentDate(
-                                                new Date(startDay.getTime() + (item.page - 1) * 24 * 60 * 60 * 1000)
-                                            );
-                                            setCurrentPage(item.page);
-                                        }}
-                                    />
-                                )}
-                            />
-                        </Grid>
+                <div className="pagination-container">
+                    <div className="pagination-item">
+                        <Pagination
+                            count={pages}
+                            page={currentPage}
+                            onChange={(e, page) => {
+                                setCurrentDate(
+                                    new Date(startDay.getTime() + (page - 1) * 24 * 60 * 60 * 1000)
+                                );
+                                setCurrentPage(page);
+                            }}
+                            color="primary"
+                            renderItem={(item) => (
+                                <PaginationItem
+                                    {...item}
+                                    label={dateStrings[item.page - 1]}
+                                    onClick={() => {
+                                        setCurrentDate(
+                                            new Date(startDay.getTime() + (item.page - 1) * 24 * 60 * 60 * 1000)
+                                        );
+                                        setCurrentPage(item.page);
+                                    }}
+                                    className="pagination-item"
+                                />
+                            )}
+                        />
                     </div>
                 </div>
             </>
+
         );
     };
 

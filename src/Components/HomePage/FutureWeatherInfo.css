@@ -1,0 +1,28 @@
+.future-weather-info {
+    display: flex;
+    justify-content: center;
+}
+
+.future-weather-paper {
+    background-color: #000;
+    color: #fff;
+    max-height: 200px;
+    min-width: 350px;
+    overflow: auto;
+    border: 2px solid #0077b6; /* Adjust the border color to your preference */
+    border-radius: 5px;
+}
+
+.future-weather-item {
+    border-bottom: 1px solid #0077b6;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 2vw;
+}
+
+.weather-icon-small {
+    width: 5vw;
+    min-width: 25px;
+    margin-right: 1vw;
+}

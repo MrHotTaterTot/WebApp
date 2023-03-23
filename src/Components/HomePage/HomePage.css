@@ -1,34 +1,99 @@
-.content-container {
-    width: 100%;
-    height: 100%;
+.weather-info {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-.weather-info {
-    width: 100%;
+.weather-icon {
+    margin-right: 2.22vw;
+}
+
+.city-name {
+    font-size: 7.5vw;
+    margin-bottom: 0;
+}
+
+.temperature {
+    font-size: 16.67vw;
+    margin-bottom: 0;
+}
+
+.wind-info {
     display: flex;
-    justify-content: center;
     align-items: center;
-    max-width: 800px;
-    flex-direction: column;
+    font-size: 4.44vw;
+    margin-top: 2.22vw;
+}
+
+.wave-height {
+    margin-top: 2.22vw;
 }
 
 .future-weather-info {
-    margin-top: 20px;
-    width: 100%;
-
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-p {
-    color: white;
-    font-family: "Roboto Thin";
-    font-weight: normal;
+.future-weather-paper {
+    background-color: #000;
+    color: #fff;
+    max-height: 25vw;
+    min-width: 48.61vw;
+    overflow: auto;
+    border: 0.83vw solid #0077b6;
+    border-radius: 1.39vw;
+}
+
+.future-weather-item {
+    border-bottom: 0.83vw solid #0077b6;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 2.78vw;
+}
+
+.weather-icon-small {
+    width: 13.89vw;
+    min-width: 1.56vw;
+    margin-right: 1.39vw;
+}
+
+.date {
+    font-size: 7.5vw;
+    margin-top: 2.22vw;
     text-align: center;
 }
 
-.wind-speed {
-    margin: 15px;
-    color: white;
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.22vw;
+}
+
+.pagination-item {
+    margin: 0 2.22vw;
+}
+.weather-container {
+    border: 2px solid #0077b6;
+    padding: 2vw;
+    margin: 8vw;
+    border-radius: 3vw;
+    background-image: url('../../../public/Background/Beach.jpg');
+    background-size: cover;
+    position: relative;
+}
+
+.weather-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(5px) brightness(0.5);
+    z-index: -1;
+}
+
+.current-weather-info {
+    position: relative;
+    z-index: 2;
 }
