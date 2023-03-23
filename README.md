@@ -1,6 +1,8 @@
 # Water SPorts Web App
 
 ## Installation
+Required Node Version: v18.14.2
+
 ``` npm install```
 
 ## Run The dev server
