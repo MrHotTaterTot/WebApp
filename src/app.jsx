@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
+import { createContext } from 'preact';
 import axios from "axios";
 import WeatherDataContext from "./WeatherDataContext";
 
@@ -11,10 +12,14 @@ import HomePage from "./Components/HomePage/HomePage.jsx";
 import SearchBar from "./Components/SearchBar/SearchBar.jsx";
 import TopBar from "./Components/TopBar/TopBar.jsx";
 
+import { LocationHistoryContext } from './LocationHistoryContext';
+
+
 function App() {
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
+
 
     useEffect(() => {
         // fetchWeatherandCity function should be moved from HomePage.jsx to App.jsx
@@ -134,20 +139,31 @@ function App() {
         return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village;
     };
 
-    return (
-        <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
-            <TopBar></TopBar>
 
-            <div className="content-container">
-                <Router>
-                    <HomePage path="/" />
-                    <Surfing path="/surfing" />
-                    <Sailing path="/sailing" />
-                    <Jetskiing path="/jetskiing" />
-                    <Swimming path="/swimming" />
-                </Router>
-            </div>
-        </WeatherDataContext.Provider>
+    const [history, setHistory] = useState([]);
+    const LocationHistoryCtxValue = {
+        history: {
+            set: setHistory,
+            get: () => history,
+        }
+    }
+
+    return (
+        <LocationHistoryContext.Provider value={LocationHistoryCtxValue}>
+            <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
+                <TopBar></TopBar>
+
+                <div className="content-container">
+                    <Router>
+                        <HomePage path="/" />
+                        <Surfing path="/surfing" />
+                        <Sailing path="/sailing" />
+                        <Jetskiing path="/jetskiing" />
+                        <Swimming path="/swimming" />
+                    </Router>
+                </div>
+            </WeatherDataContext.Provider>
+        </LocationHistoryContext.Provider>
     );
 }
 

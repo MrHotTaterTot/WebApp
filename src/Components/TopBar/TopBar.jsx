@@ -2,8 +2,15 @@ import { useState } from 'preact/hooks';
 import { Link } from 'preact-router/match';
 import { AppBar, IconButton, Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { useLocationCtx } from '../../LocationHistoryContext';
+import SearchBar from '../SearchBar/SearchBar';
+
+
 
 function TopBar() {
+
+    const HistoryCtx = useLocationCtx()
+
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const toggleDrawer = () => {
@@ -21,6 +28,9 @@ function TopBar() {
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
                         Top Bar
                     </Typography>
+                    <SearchBar onSearch={(city) => {
+                        HistoryCtx.history.set(prevState => [...prevState, city])
+                    }} />
                     <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer}>
                         <MenuIcon />
                     </IconButton>
@@ -55,6 +65,13 @@ function TopBar() {
                             </ListItem>
                         </Link>
                     </List>
+                    {HistoryCtx.history.get().map((city, index) => (
+                        <ListItem button onClick={handleDrawerClose}>
+                            <ListItemText primary={city} />
+                        </ListItem>
+                    )
+
+                    )}
                 </Paper>
             </Drawer>
         </>
