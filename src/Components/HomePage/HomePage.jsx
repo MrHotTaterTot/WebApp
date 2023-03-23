@@ -8,30 +8,37 @@ export function HomePage() {
     const { weather, city } = useContext(WeatherDataContext);
     const renderWeather = () => {
         if (!weather || !city) return <p>Loading</p>
-
-        const _data = weather.weatherData;
-        const _city = city.cityName;
-        const _temp = _data.hourly.temperature_2m[0];
-        const _humidity = _data.hourly.relativehumidity_2m[0];
-        const _apparentTemp = _data.hourly.apparent_temperature[0];
-        const _precipitationProbability = _data.hourly.precipitation_probability[0];
-        const _precipitation = _data.hourly.precipitation[0];
-        const _weatherCode = _data.hourly.weathercode[0];
-        const _visibility = _data.hourly.visibility[0];
-        const _windSpeed = _data.hourly.windspeed_10m[0];
-        const _windDirection = _data.hourly.winddirection_10m[0];
-        const _windGusts = _data.hourly.windgusts_10m[0];
-        const _waveHeight = _data.marine.hourly.wave_height[0];
+// if you want to use the weather, just import the weather data from the context
+        // import { useContext } from 'preact/hooks';
+        // import WeatherDataContext from "../../WeatherDataContext";
+// and use it like this:
+// const { weather, city } = useContext(WeatherDataContext);
+        //weather is saved like that:
+        // City is also saved there
+        // weather: {
+        //     temp: [0 .. 71]
+        //     pressure: [0 .. 71]
+        //     humidity: [0 .. 71]
+        //     precipitationProbability: [0 .. 71]
+        //     precipitation: [0 .. 71]
+        //     weatherCode: [0 .. 71]
+        //     visibility: [0 .. 71]
+        //     windSpeed: [0 .. 71]
+        //     windDirection: [0 .. 71]
+        //     windGusts: [0 .. 71]
+        //     waveHeight: [0 .. 71]
+        // }
+        // Each index is an hour, so weather.temp[0] is the current temperature
 
         return (
             <WeatherInfo
-                city={_city}
-                temperature={_temp}
-                humidity={_humidity}
-                weatherCode={_weatherCode}
-                windSpeed={_windSpeed}
-                windDirection={_windDirection}
-                waveHeight={_waveHeight}
+                city={city.cityName}
+                temperature={weather.weatherData.temp[0]}
+                humidity={weather.weatherData.humidity[0]}
+                weatherCode={weather.weatherData.weatherCode[0]}
+                windSpeed={weather.weatherData.windSpeed[0]}
+                windDirection={weather.weatherData.windDirection[0]}
+                waveHeight={weather.weatherData.waveHeight[0]}
             ></WeatherInfo>
         );
 

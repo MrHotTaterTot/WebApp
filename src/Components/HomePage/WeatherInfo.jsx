@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 function WeatherInfo({ city, temperature, humidity, weatherCode, windSpeed, windDirection, waveHeight }) {
     const classes = useStyles();
+
     const activity = "A good day for activity"; // TODO: change
 
     return (

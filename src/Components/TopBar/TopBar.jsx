@@ -1,9 +1,22 @@
 import { useState } from 'preact/hooks';
 import { Link } from 'preact-router/match';
-import { AppBar, IconButton, Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core';
+import {
+    AppBar,
+    IconButton,
+    Toolbar,
+    Typography,
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Paper,
+    Divider
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useLocationCtx } from '../../LocationHistoryContext';
 import SearchBar from '../SearchBar/SearchBar';
+import './TopBar.css';
 
 
 
@@ -21,24 +34,32 @@ function TopBar() {
         setDrawerOpen(false);
     };
 
+    async function handleSearchFromHistory(city) {
+        handleDrawerClose();
+        await HistoryCtx.searchCity(city);
+    }
+
     return (
         <>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        Top Bar
-                    </Typography>
-                    <SearchBar onSearch={(city) => {
-                        HistoryCtx.history.set(prevState => [...prevState, city])
-                    }} />
                     <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer}>
                         <MenuIcon />
                     </IconButton>
+                    <Typography variant="h6" style={{ flexGrow: 1 }}>
+                        Top Bar
+                    </Typography>
+                    <SearchBar onSearch={async (city) => {
+                        await HistoryCtx.searchCity(city)
+                    }} />
                 </Toolbar>
             </AppBar>
             <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
                 <Paper style={{ width: 300 }}>
                     <List>
+                        <Typography variant="h6" className="divider-label">
+                            Web Pages
+                        </Typography>
                         <Link activeClassName="active" href="/">
                             <ListItem button onClick={handleDrawerClose}>
                                 <ListItemText primary="Home" />
@@ -65,13 +86,16 @@ function TopBar() {
                             </ListItem>
                         </Link>
                     </List>
+                    <Divider />
+                    <Typography variant="h6" className="divider-label">
+                        Search History
+                    </Typography>
+
                     {HistoryCtx.history.get().map((city, index) => (
-                        <ListItem button onClick={handleDrawerClose}>
+                        <ListItem button onClick={() => handleSearchFromHistory(city)}>
                             <ListItemText primary={city} />
                         </ListItem>
-                    )
-
-                    )}
+                    ))}
                 </Paper>
             </Drawer>
         </>
