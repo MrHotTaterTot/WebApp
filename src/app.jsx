@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'preact/hooks';
 import axios from "axios";
 import WeatherDataContext from "./WeatherDataContext";
-
 import { Router, Route } from 'preact-router';
 import Surfing from "./pages/Surfing/Surfing.jsx";
 import Sailing from "./pages/Sailing/Sailing.jsx";
 import Jetskiing from "./pages/Jetskiing/Jetskiing.jsx";
 import Swimming from "./pages/Swimming/Swimming.jsx";
 import HomePage from "./Components/HomePage/HomePage.jsx";
-import SearchBar from "./Components/SearchBar/SearchBar.jsx";
 import TopBar from "./Components/TopBar/TopBar.jsx";
+import "./app.css"
+
+import {LocationHistoryContext, useLocationCtx} from './LocationHistoryContext';
+
 
 function App() {
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
+
 
     useEffect(() => {
         // fetchWeatherandCity function should be moved from HomePage.jsx to App.jsx
@@ -32,9 +35,8 @@ function App() {
             setWeather({ weatherData });
             setCity({ cityName });
 
-            if (sideBarRef.current) {
-                sideBarRef.current.addCityToHistory(cityName);
-            }
+            setHistory(prevState => [...prevState, cityName])
+
         } catch (error) {
             console.log(error);
         }
@@ -61,13 +63,19 @@ function App() {
             const weatherData = await getWeather(latitude, longitude);
             const cityName = await getCityName(latitude, longitude);
 
+
+
             setWeather({ weatherData });
+            console.log(weather);
             setCity({ cityName });
             setErrorMessage(""); // Clear any previous error messages
 
-            if (sideBarRef.current) {
-                sideBarRef.current.addCityToHistory(cityName);
+            if (!history.includes(cityName)) {
+                setHistory(prevState => [...prevState, cityName])
             }
+
+
+
         } catch (error) {
             setErrorMessage(error.message);
             console.log(error);
@@ -83,9 +91,9 @@ function App() {
         });
     };
 
-    const addCityToHistory = (cityName) => {
-        sideBarRef.current.addCityToHistory(cityName);
-    };
+    // const addCityToHistory = (cityName) => {
+    //     sideBarRef.current.addCityToHistory(cityName);
+    // };
     const getWeather = async (latitude, longitude) => {
         const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,precipitation,weathercode,visibility,windspeed_10m,winddirection_10m,windgusts_10m&windspeed_unit=mph&forecast_days=3`;
         const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${latitude}&longitude=${longitude}&hourly=wave_height`;
@@ -102,23 +110,31 @@ function App() {
             marineResponse = await axios.get(marineUrl);
         }
         catch (error) {
-
             if (error.response.data.reason === "No data is available for this location") {
-                marineData = { hourly: { wave_height: [0] } };
+                marineData = { hourly: { wave_height: Array(72).fill(0) } };
             }
         }
-
-
 
         const weatherData = weatherResponse.data;
         if (!marineData) {
             marineData = marineResponse.data;
         }
-
-        return {
-            ...weatherData,
-            marine: marineData,
-        };
+        const data = {
+            temp: weatherData.hourly.temperature_2m,
+            apparentTemp: weatherData.hourly.apparent_temperature,
+            pressure: weatherData.hourly.apparent_temperature,
+            humidity: weatherData.hourly.relativehumidity_2m,
+            precipitationProbability: weatherData.hourly.precipitation_probability,
+            precipitation: weatherData.hourly.precipitation,
+            weatherCode: weatherData.hourly.weathercode,
+            visibility: weatherData.hourly.visibility,
+            windSpeed: weatherData.hourly.windspeed_10m,
+            windDirection: weatherData.hourly.winddirection_10m,
+            windGusts: weatherData.hourly.windgusts_10m,
+            waveHeight: marineData.hourly.wave_height,
+        }
+        console.log(data);
+        return data;
     };
     const getCityName = async (latitude, longitude) => {
         const apiKey = '7eda583d5e1f44839ca8a8e651e66eec';
@@ -134,20 +150,34 @@ function App() {
         return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village;
     };
 
-    return (
-        <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
-            <TopBar></TopBar>
 
-            <div className="content-container">
-                <Router>
-                    <HomePage path="/" />
-                    <Surfing path="/surfing" />
-                    <Sailing path="/sailing" />
-                    <Jetskiing path="/jetskiing" />
-                    <Swimming path="/swimming" />
-                </Router>
-            </div>
-        </WeatherDataContext.Provider>
+    const [history, setHistory] = useState([]);
+    const LocationHistoryCtxValue = {
+        searchCity,
+        history: {
+            set: setHistory,
+            get: () => history,
+        }
+    }
+
+    return (
+        <div className="app-container">
+            <LocationHistoryContext.Provider value={LocationHistoryCtxValue}>
+                <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
+                    <TopBar></TopBar>
+
+                    <div className="content-container">
+                        <Router>
+                            <HomePage path="/" />
+                            <Surfing path="/surfing" />
+                            <Sailing path="/sailing" />
+                            <Jetskiing path="/jetskiing" />
+                            <Swimming path="/swimming" />
+                        </Router>
+                    </div>
+                </WeatherDataContext.Provider>
+            </LocationHistoryContext.Provider>
+        </div>
     );
 }
 
