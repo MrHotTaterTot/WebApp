@@ -16,19 +16,23 @@ export function HomePage() {
         //weather is saved like that:
         // City is also saved there
         // weather: {
-        //     temp: [0 .. 71]
-        //     pressure: [0 .. 71]
-        //     humidity: [0 .. 71]
-        //     precipitationProbability: [0 .. 71]
-        //     precipitation: [0 .. 71]
-        //     weatherCode: [0 .. 71]
-        //     visibility: [0 .. 71]
-        //     windSpeed: [0 .. 71]
-        //     windDirection: [0 .. 71]
-        //     windGusts: [0 .. 71]
-        //     waveHeight: [0 .. 71]
+        //     weatherData: {
+        //          temp: [0 .. 71]
+        //          pressure: [0 .. 71]
+        //          humidity: [0 .. 71]
+        //          precipitationProbability: [0 .. 71]
+        //          precipitation: [0 .. 71]
+        //          weatherCode: [0 .. 71]
+        //          visibility: [0 .. 71]
+        //          windSpeed: [0 .. 71]
+        //          windDirection: [0 .. 71]
+        //          windGusts: [0 .. 71]
+        //          waveHeight: [0 .. 71]
+        //     }
         // }
-        // Each index is an hour, so weather.temp[0] is the current temperature
+        // Each index is an hour, so weather.weatherData.temp[0] is the current temperature
+        // Tbh idk why the weatherdata is saved like that, but it is
+        // it should be just weather.temp[0] but something got a bit retarded
 
         return (
             <WeatherInfo
