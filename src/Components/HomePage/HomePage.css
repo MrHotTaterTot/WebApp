@@ -12,6 +12,23 @@
     flex-direction: column;
 }
 
+.future-weather-info {
+    margin-top: 20px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    color: white;
+    font-family: "Roboto Thin";
+    font-weight: normal;
+    text-align: center;
+}
+
 .wind-speed {
     margin: 15px;
+    color: white;
 }

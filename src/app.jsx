@@ -8,6 +8,7 @@ import Jetskiing from "./pages/Jetskiing/Jetskiing.jsx";
 import Swimming from "./pages/Swimming/Swimming.jsx";
 import HomePage from "./Components/HomePage/HomePage.jsx";
 import TopBar from "./Components/TopBar/TopBar.jsx";
+import "./app.css"
 
 import {LocationHistoryContext, useLocationCtx} from './LocationHistoryContext';
 
@@ -160,21 +161,23 @@ function App() {
     }
 
     return (
-        <LocationHistoryContext.Provider value={LocationHistoryCtxValue}>
-            <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
-                <TopBar></TopBar>
+        <div className="app-container">
+            <LocationHistoryContext.Provider value={LocationHistoryCtxValue}>
+                <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
+                    <TopBar></TopBar>
 
-                <div className="content-container">
-                    <Router>
-                        <HomePage path="/" />
-                        <Surfing path="/surfing" />
-                        <Sailing path="/sailing" />
-                        <Jetskiing path="/jetskiing" />
-                        <Swimming path="/swimming" />
-                    </Router>
-                </div>
-            </WeatherDataContext.Provider>
-        </LocationHistoryContext.Provider>
+                    <div className="content-container">
+                        <Router>
+                            <HomePage path="/" />
+                            <Surfing path="/surfing" />
+                            <Sailing path="/sailing" />
+                            <Jetskiing path="/jetskiing" />
+                            <Swimming path="/swimming" />
+                        </Router>
+                    </div>
+                </WeatherDataContext.Provider>
+            </LocationHistoryContext.Provider>
+        </div>
     );
 }
 
