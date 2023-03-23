@@ -38,16 +38,38 @@ function TopBar() {
         handleDrawerClose();
         await HistoryCtx.searchCity(city);
     }
+    function formatDate(date = new Date()) {
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        function ordinalSuffix(day) {
+            if (day % 10 === 1 && day !== 11) {
+                return day + 'st';
+            } else if (day % 10 === 2 && day !== 12) {
+                return day + 'nd';
+            } else if (day % 10 === 3 && day !== 13) {
+                return day + 'rd';
+            } else {
+                return day + 'th';
+            }
+        }
+
+        return `${ordinalSuffix(day)} ${monthNames[monthIndex]}`;
+    }
 
     return (
         <>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer}>
+                    <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer} style={{marginRight:0}}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        Top Bar
+                    <Typography variant="h6" style={{ flexGrow: 1 , marginRight: 12}}>
+                        {formatDate()}
                     </Typography>
                     <SearchBar onSearch={async (city) => {
                         await HistoryCtx.searchCity(city)
