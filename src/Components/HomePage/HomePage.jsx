@@ -15,7 +15,7 @@ export function HomePage() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Add event listeners for swipe gestures
+// Add event listeners for swipe gestures
     let startX, startY;
     function handleTouchStart(e) {
         startX = e.touches[0].pageX || e.touches[0].clientX;
@@ -48,18 +48,23 @@ export function HomePage() {
         };
     }, []);
 
-    // Calculate the start and end dates for the page numbers
+// Calculate the start and end dates for the page numbers
     const startDay = new Date(currentDate.getTime() - (currentPage - 1) * 24 * 60 * 60 * 1000);
     const endDay = new Date(startDay.getTime() + 6 * 24 * 60 * 60 * 1000);
 
-    // Generate an array of date strings for the page numbers
+// Format the current date in the desired way
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+// Generate an array of date strings for the page numbers
     const dateStrings = [];
     let currentDateIterator = new Date(startDay.getTime());
     while (currentDateIterator <= endDay) {
-        dateStrings.push(currentDateIterator.toDateString());
+        const formattedDateString = currentDateIterator.toLocaleDateString('en-US', options);
+        dateStrings.push(formattedDateString);
         currentDateIterator.setDate(currentDateIterator.getDate() + 1);
     }
 
+// Render the weather information
     const renderWeather = () => {
         if (!weather || !city) return <p>Loading</p>;
 
@@ -95,19 +100,24 @@ export function HomePage() {
         return (
             <>
                 <div className="weather-container">
-                    <CurrentWeatherInfo
-                        city={city.cityName}
-                        temperature={weather.weatherData.temp[curr]}
-                        humidity={weather.weatherData.humidity[curr]}
-                        weatherCode={weather.weatherData.weatherCode[curr]}
-                        windSpeed={weather.weatherData.windSpeed[curr]}
-                        windDirection={weather.weatherData.windDirection[curr]}
-                        waveHeight={weather.weatherData.waveHeight[curr]}
-                        className="current-weather-info"
-                    />
+                    <div className="current-weather-info">
+                        <CurrentWeatherInfo
+                            humidity={weather.weatherData.humidity[curr]}
+                            weatherCode={weather.weatherData.weatherCode[curr]}
+                            windSpeed={weather.weatherData.windSpeed[curr]}
+                            windDirection={weather.weatherData.windDirection[curr]}
+                            waveHeight={weather.weatherData.waveHeight[curr]}
+                            city={city.cityName}
+                            temperature={weather.weatherData.temp[curr]}
+                        />
+                    </div>
                 </div>
 
-                <p className="date">{currentDate.toDateString()}</p>
+                <div className="date">
+                    {formattedDate.split(', ')[0]}
+                    <br />
+                    {formattedDate.split(', ')[1]}
+                </div>
 
                 <FutureWeatherInfo
                     from={curr0}
@@ -145,11 +155,8 @@ export function HomePage() {
                     </div>
                 </div>
             </>
-
         );
     };
-
-
 
     return (
         <div className="homepage-container">

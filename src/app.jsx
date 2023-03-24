@@ -147,7 +147,7 @@ function App() {
             throw new Error('No results found for the provided coordinates.');
         }
 
-        return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village;
+        return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village || response.data.result[0].components.state;
     };
 
 
@@ -160,12 +160,24 @@ function App() {
         }
     }
 
+
+    // -------------------------------------------------
+    const [units, setUnits] = useState('°C');
+    const toggleUnits = () => {
+        setUnits(prevUnits => (prevUnits === '°C' ? '°F' : '°C'))
+    }
+
     return (
         <div className="app-container">
             <LocationHistoryContext.Provider value={LocationHistoryCtxValue}>
-                <WeatherDataContext.Provider value={{ weather, setWeather, city, setCity, setErrorMessage }}>
+                <WeatherDataContext.Provider value={
+                    {units: {
+                        get: units,
+                        toggle: toggleUnits
+                    } ,weather, setWeather, city, setCity, setErrorMessage
+                    }
+                }>
                     <TopBar></TopBar>
-
                     <div className="content-container">
                         <Router>
                             <HomePage path="/" />

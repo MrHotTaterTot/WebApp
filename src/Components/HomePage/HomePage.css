@@ -61,3 +61,7 @@
     position: relative;
     z-index: 2;
 }
+
+.weather-icon-drop-shadow{
+    filter: drop-shadow(0 0 10px #1C1B1F);
+}

@@ -1,24 +1,42 @@
-import { useState } from 'preact/hooks';
-import { Link } from 'preact-router/match';
 import {
-    AppBar,
-    IconButton,
-    Toolbar,
-    Typography,
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Paper,
-    Divider
+    AppBar, Divider, Drawer, FormControlLabel, IconButton, List,
+    ListItem, ListItemText, Switch, Toolbar,
+    Typography
 } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'preact-router/match';
+import { useState } from 'preact/hooks';
 import { useLocationCtx } from '../../LocationHistoryContext';
 import SearchBar from '../SearchBar/SearchBar';
 import './TopBar.css';
 import {useWeatherContext} from "../../WeatherDataContext.jsx";
 
+const useStyles = makeStyles({
+    paper: {
+        backgroundColor: '#1e1e1e',
+        width: '50vw',
+        height: '100vh',
+    },
+    linkItem: {
+        textDecoration: 'none',
+        "&:focus, &:hover, &:visited, &:link, &:active": {
+            textDecoration: 'none',
+        }
+    },
+    listItem: {
+        color: 'white',
+        paddingLeft: '2rem',
+        '&:hover': {
+            backgroundColor: '#2e2e2e',
+        },
+    },
+    navHeading: {
+        color: 'white',
+        padding: '0 16px',
+        marginTop: '1rem',
+    }
+})
 
 const NavConfig = [
     {

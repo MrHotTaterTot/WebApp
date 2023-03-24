@@ -2,6 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import {WeatherCodeToIcon} from "../Icon/WeatherCodeToIcon.jsx";
 import {List, ListItem, Paper, Typography} from '@material-ui/core';
 import './FutureWeatherInfo.css'
+import {useWeatherContext} from "../../WeatherDataContext.jsx";
+import {formatTemp} from "../../utils.js";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FutureWeatherInfo({ from, to, data }) {
+
+    const WeatherCtx = useWeatherContext()
+
     const items = [];
 
     const now = new Date();
