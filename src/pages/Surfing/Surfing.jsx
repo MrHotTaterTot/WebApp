@@ -9,8 +9,15 @@ function Surfing() {
 
     const WeatherCtx = useWeatherContext()
 
-    const weather = WeatherCtx.weather.weatherData
 
+    const weather = WeatherCtx.weather.weatherData
+    const unitsMapping = {
+        temp: '°C',
+        windGusts: 'm/s',
+        waveHeight: 'm',
+        windSpeed: 'm/s',
+        windDirection: '°',
+    }
     const requiredKeys = [
         'temp',
         'windGusts',
@@ -25,19 +32,17 @@ function Surfing() {
 
 
     return (
-        <div
-            class="Page-Container"
-        >
+        <div class="Page-Container">
             <h1>Surfing Page</h1>
-            <p>Welcome to the Surfing page!</p>
-            {
-                requiredKeys.map(key => {
-                        return <MetricComponent key={key} metric={key}
-                                                value={weather[key][0]}
-                        />
-                    }
-                )
-            }
+            <p>Important Weather information for Surfing</p>
+            {requiredKeys.map((key) => (
+                <MetricComponent
+                    key={key}
+                    metric={key}
+                    value={weather[key][0]}
+                    unit={unitsMapping[key]}
+                />
+            ))}
         </div>
     );
 }

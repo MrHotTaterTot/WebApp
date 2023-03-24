@@ -3,7 +3,7 @@ import {
     ListItem, ListItemText, Switch, Toolbar,
     Typography
 } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'preact-router/match';
 import { useState } from 'preact/hooks';
@@ -11,6 +11,21 @@ import { useLocationCtx } from '../../LocationHistoryContext';
 import SearchBar from '../SearchBar/SearchBar';
 import './TopBar.css';
 import {useWeatherContext} from "../../WeatherDataContext.jsx";
+import {blue, lightBlue} from "@material-ui/core/colors";
+
+const BlueSwitch = withStyles({
+    switchBase: {
+        color: "white",
+        "&$checked": {
+            color: blue[500],
+        },
+        "&$checked + $track": {
+            backgroundColor: lightBlue[500],
+        },
+    },
+    checked: {},
+    track: {},
+})(Switch);
 
 const useStyles = makeStyles({
     paper: {
@@ -35,7 +50,10 @@ const useStyles = makeStyles({
         color: 'white',
         padding: '0 16px',
         marginTop: '1rem',
-    }
+    },
+    switch: {
+        marginLeft: '3vw',
+    },
 })
 
 const NavConfig = [
@@ -68,6 +86,7 @@ function TopBar() {
 
     const classes = useStyles();
 
+
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
     };
@@ -75,8 +94,12 @@ function TopBar() {
     const handleDrawerClose = () => {
         setDrawerOpen(false);
     };
+    const handleSearchFromHistory = async (city) => {
+        await HistoryCtx.searchCity(city);
+        handleDrawerClose();
+    }
 
-    const units = "metric";
+    const units = WeatherCtx.units.get;
 
     return (
         <>
@@ -98,20 +121,21 @@ function TopBar() {
                             await HistoryCtx.searchCity(city);
                         }}
                     />
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={units === "imperial"}
-                                onChange={() => {
-                                    WeatherCtx.units.toggle()
-                                }
-                                }
-                                name="unit-switch"
-                                color="secondary"
-                            />
-                        }
-                        label={units === "imperial" ? "°F" : "°C"}
-                    />
+                    <div className="switch-container">
+                        <FormControlLabel
+                            control={
+                                <BlueSwitch
+                                    checked={units === "°F"}
+                                    onChange={() => {
+                                        WeatherCtx.units.toggle();
+                                    }}
+                                    name="unit-switch"
+                                />
+                            }
+                            label={units === "°F" ? "°F" : "°C"}
+                            className={classes.switch}
+                        />
+                    </div>
                 </Toolbar>
             </AppBar>
             <Drawer

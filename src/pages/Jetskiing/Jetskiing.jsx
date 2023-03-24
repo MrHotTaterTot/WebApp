@@ -8,6 +8,17 @@ function Jetskiing() {
 
     const weather = WeatherCtx.weather.weatherData
 
+    const unitsMapping = {
+        temp: '°C',
+        windGusts: 'm/s',
+        waveHeight: 'm',
+        windSpeed: 'm/s',
+        windDirection: '°',
+        visibility: 'm',
+        precipitation: 'mm',
+        precipitationProbability: '%',
+    }
+
     const requiredKeys = [
         'temp',
         'windGusts',
@@ -27,14 +38,15 @@ function Jetskiing() {
     return (
         <div class="Page-Container">
             <h1>Jetskiing Page</h1>
-            <p>Welcome to the Jetskiing page!</p>
-            {
-                requiredKeys.map(key => {
-                    return <MetricComponent key={key} metric={key}
-                                            value={weather[key][0]}
-                    />
-                })
-            }
+            <p>Important Weather information for Jet Skiing</p>
+            {requiredKeys.map((key) => (
+                <MetricComponent
+                    key={key}
+                    metric={key}
+                    value={weather[key][0]}
+                    unit={unitsMapping[key]}
+                />
+            ))}
         </div>
     );
 }

@@ -5,7 +5,17 @@ import CurrentWeatherInfo from "./CurrentWeatherInfo.jsx";
 import FutureWeatherInfo from "./FutureWeatherInfo.jsx";
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles({
+    paginationItem: {
+        color: 'white',
+    },
+    pagination: {
+        marginTop: '3vw',
+        alignContent: 'center',
+    }
+});
 
 
 export function HomePage() {
@@ -15,6 +25,7 @@ export function HomePage() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentPage, setCurrentPage] = useState(1);
 
+    const classes = useStyles();
 // Add event listeners for swipe gestures
     let startX, startY;
     function handleTouchStart(e) {
@@ -138,6 +149,7 @@ export function HomePage() {
                                 setCurrentPage(page);
                             }}
                             color="primary"
+                            className={classes.pagination}
                             renderItem={(item) => (
                                 <PaginationItem
                                     {...item}
@@ -148,7 +160,7 @@ export function HomePage() {
                                         );
                                         setCurrentPage(item.page);
                                     }}
-                                    className="pagination-item"
+                                    className={classes.paginationItem}
                                 />
                             )}
                         />

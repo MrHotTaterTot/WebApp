@@ -13,8 +13,23 @@ import "./app.css"
 import {LocationHistoryContext, useLocationCtx} from './LocationHistoryContext';
 
 
+const initialWeather = {
+    temp: [],
+    apparentTemp: [],
+    pressure: [],
+    humidity: [],
+    precipitationProbability: [],
+    precipitation: [],
+    weatherCode: [],
+    visibility: [],
+    windSpeed: [],
+    windDirection: [],
+    windGusts: [],
+    waveHeight: [],
+};
+
 function App() {
-    const [weather, setWeather] = useState(null);
+    const [weather, setWeather] = useState(initialWeather);
     const [city, setCity] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -132,7 +147,6 @@ function App() {
             windGusts: weatherData.hourly.windgusts_10m,
             waveHeight: marineData.hourly.wave_height,
         }
-        console.log(data);
         return data;
     };
     const getCityName = async (latitude, longitude) => {
@@ -140,14 +154,13 @@ function App() {
         const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
 
         const response = await axios.get(url);
-        console.log(response.data)
 
         // Check if there are any results, otherwise throw an error
         if (response.data.results.length === 0) {
             throw new Error('No results found for the provided coordinates.');
         }
 
-        return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village || response.data.result[0].components.state;
+        return response.data.results[0].components.city || response.data.results[0].components.town || response.data.results[0].components.village || response.data.results[0].components.state;
     };
 
 

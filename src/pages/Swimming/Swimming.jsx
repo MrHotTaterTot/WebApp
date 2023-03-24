@@ -15,23 +15,23 @@ function Swimming() {
         'precipitation'
     ]
 
+    let unitsMapping = {
+        temp: '°C',
+        waveHeight: 'm',
+        precipitation: 'mm',
+    }
     return (
-        <div
-            className="Page-Container"
-        >
+        <div class="Page-Container">
             <h1>Swimming Page</h1>
-            <p>Welcome to the Swimming page!</p>
-            {
-                requiredKeys.map(key => {
-                        return <MetricComponent
-                            key={key}
-                            metric={key}
-                            value={weather[key][0]}
-                        />
-                    }
-                )
-
-            }
+            <p>Important Weather information for Swimming</p>
+            {requiredKeys.map((key) => (
+                <MetricComponent
+                    key={key}
+                    metric={key}
+                    value={weather[key][0]}
+                    unit={unitsMapping[key]}
+                />
+            ))}
         </div>
     );
 }

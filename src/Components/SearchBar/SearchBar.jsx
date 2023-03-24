@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import './SearchBar.css';
 
 const SearchBar = ({ onSearch }) => {
     const [search, setSearch] = useState('');
@@ -10,15 +11,18 @@ const SearchBar = ({ onSearch }) => {
     };
 
     return (
-        <form onSubmit={handleSearch}>
-            <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search for a city..."
-            />
-            <button type="submit">Search</button>
-        </form>
+        <div className="search-container">
+            <form onSubmit={handleSearch}>
+                <input
+                    className="search-input"
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search for a city..."
+                />
+                <button className="search-button" type="submit">Search</button>
+            </form>
+        </div>
     );
 };
 

@@ -1,16 +1,12 @@
-function MetricComponent({ metric, value }) {
+function MetricComponent({ metric, value, unit }) {
     return (
-        <div
-            className="MetricComponent"
-        >
+        <div>
+            <h2>{metric}</h2>
             <p>
-                {metric}:
-            </p>
-            <p>
-                {value}
+                {value} {unit} {/* Display the unit here */}
             </p>
         </div>
-    )
+    );
 }
 
 export default MetricComponent
