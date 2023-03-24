@@ -1,12 +1,12 @@
 import {useContext, useEffect, useState} from 'preact/hooks';
 import WeatherDataContext from "../../WeatherDataContext";
-import {WeatherCodeToIcon} from "../Icon/WeatherCodeToIcon";
 import './HomePage.css'
 import CurrentWeatherInfo from "./CurrentWeatherInfo.jsx";
 import FutureWeatherInfo from "./FutureWeatherInfo.jsx";
-import { Grid } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
+
+
 
 export function HomePage() {
     const { weather, city } = useContext(WeatherDataContext);

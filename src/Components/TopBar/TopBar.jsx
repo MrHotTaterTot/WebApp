@@ -17,14 +17,38 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useLocationCtx } from '../../LocationHistoryContext';
 import SearchBar from '../SearchBar/SearchBar';
 import './TopBar.css';
+import {useWeatherContext} from "../../WeatherDataContext.jsx";
 
 
+const NavConfig = [
+    {
+        name: 'Home',
+        path: '/',
+    },
+    {
+        name: 'Surfing',
+        path: '/surfing',
+    },
+    {
+        name: 'Sailing',
+        path: '/sailing',
+    },
+    {
+        name: 'Jet Skiing',
+        path: '/jetskiing',
+    },
+    {
+        name: 'Swimming',
+        path: '/swimming',
+    },
 
+]
 function TopBar() {
-
-    const HistoryCtx = useLocationCtx()
-
+    const WeatherCtx = useWeatherContext();
+    const HistoryCtx = useLocationCtx();
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const classes = useStyles();
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
@@ -34,104 +58,110 @@ function TopBar() {
         setDrawerOpen(false);
     };
 
-    async function handleSearchFromHistory(city) {
-        handleDrawerClose();
-        await HistoryCtx.searchCity(city);
-    }
-    function formatDate(date = new Date()) {
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-
-        function ordinalSuffix(day) {
-            if (day % 10 === 1 && day !== 11) {
-                return day + 'st';
-            } else if (day % 10 === 2 && day !== 12) {
-                return day + 'nd';
-            } else if (day % 10 === 3 && day !== 13) {
-                return day + 'rd';
-            } else {
-                return day + 'th';
-            }
-        }
-
-        return `${ordinalSuffix(day)} ${monthNames[monthIndex]}`;
-    }
+    const units = "metric";
 
     return (
         <>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer} style={{marginRight:0}}>
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        aria-label="menu"
+                        onClick={toggleDrawer}
+                        style={{ marginRight: 0 }}
+                    >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" style={{ flexGrow: 1 , marginRight: 12}}>
+                    <Typography variant="h6" style={{ flexGrow: 1, marginRight: 12 }}>
                     </Typography>
-                    <SearchBar onSearch={async (city) => {
-                        await HistoryCtx.searchCity(city)
-                    }} />
+                    <SearchBar
+                        onSearch={async (city) => {
+                            await HistoryCtx.searchCity(city);
+                        }}
+                    />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={units === "imperial"}
+                                onChange={() => {
+                                    WeatherCtx.units.toggle()
+                                }
+                                }
+                                name="unit-switch"
+                                color="secondary"
+                            />
+                        }
+                        label={units === "imperial" ? "°F" : "°C"}
+                    />
                 </Toolbar>
             </AppBar>
             <Drawer
                 anchor="left"
                 open={drawerOpen}
                 onClose={handleDrawerClose}
-                classes={{ paper: 'drawer-paper' }} // Add this line
+                classes={{ paper: classes.paper }} // Add this line
             >
-                <Paper style={{ width: '100%', height: '100%' }}>
-                    <List>
-                        <Typography
-                            variant="h6"
-                            className="divider-label typography-margin" // Add the typography-margin class
-                        >
-                            Web Pages
-                        </Typography>
-                        <Link activeClassName="active" href="/">
-                            <ListItem button onClick={handleDrawerClose}>
-                                <ListItemText primary="Home" />
-                            </ListItem>
-                        </Link>
-                        <Link activeClassName="active" href="/surfing">
-                            <ListItem button onClick={handleDrawerClose}>
-                                <ListItemText primary="Surfing" />
-                            </ListItem>
-                        </Link>
-                        <Link activeClassName="active" href="/sailing">
-                            <ListItem button onClick={handleDrawerClose}>
-                                <ListItemText primary="Sailing" />
-                            </ListItem>
-                        </Link>
-                        <Link activeClassName="active" href="/jetskiing">
-                            <ListItem button onClick={handleDrawerClose}>
-                                <ListItemText primary="Jet Skiing" />
-                            </ListItem>
-                        </Link>
-                        <Link activeClassName="active" href="/swimming">
-                            <ListItem button onClick={handleDrawerClose}>
-                                <ListItemText primary="Swimming" />
-                            </ListItem>
-                        </Link>
-                    </List>
-                    <Divider />
-                    <Typography
-                        variant="h6"
-                        className="divider-label typography-margin" // Add the typography-margin class
-                    >
-                        Search History
-                    </Typography>
+                <Typography
+                    variant="h6"
+                    className="divider-label typography-margin" // Add the typography-margin class
+                    classes={{
+                        root: classes.navHeading,
+                    }}
+                >
+                    Web Pages
+                </Typography>
 
-                    {HistoryCtx.history.get().map((city, index) => (
-                        <ListItem button onClick={() => handleSearchFromHistory(city)}>
-                            <ListItemText primary={city} />
-                        </ListItem>
-                    ))}
-                </Paper>
+                {NavConfig.map((item, index) => {
+                    return (
+                        <Link
+                            href={item.path}
+                            key={item.path}
+                            style={{ textDecoration: "none" }}
+                            classes={{
+                                root: classes.linkItem,
+                            }}
+                        >
+                            <ListItem
+                                button
+                                onClick={handleDrawerClose}
+                                classes={{
+                                    root: classes.listItem,
+                                }}
+                            >
+                                <ListItemText primary={item.name} />
+                            </ListItem>
+                        </Link>
+                    );
+                })}
+
+                <Divider />
+                <Typography
+                    variant="h6"
+                    className="divider-label typography-margin" // Add the typography-margin class
+                    classes={{
+                        root: classes.navHeading,
+                    }}
+                >
+                    Search History
+                </Typography>
+
+                {HistoryCtx.history.get().map((city, index) => (
+                    <ListItem
+                        button
+                        onClick={() => handleSearchFromHistory(city)}
+                        key={city}
+                        classes={{
+                            root: classes.listItem,
+                        }}
+                    >
+                        <ListItemText primary={city} />
+                    </ListItem>
+                ))}
             </Drawer>
         </>
     );
 }
+
 
 export default TopBar;

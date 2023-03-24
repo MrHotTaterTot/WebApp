@@ -1,48 +1,30 @@
-import { makeStyles } from '@material-ui/core/styles';
-import {WeatherCodeToIcon} from "../Icon/WeatherCodeToIcon.jsx";
+import { useState } from 'preact/hooks';
+import WeatherDataContext, {useWeatherContext} from "../../WeatherDataContext.jsx";
+
+import { WeatherCodeToIcon } from '../Icon/WeatherCodeToIcon.jsx';
 import './CurrentWeatherInfo.css';
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    icon: {
-        marginRight: theme.spacing(1),
-    },
-}));
+import {formatTemp} from "../../utils.js";
+
 
 function CurrentWeatherInfo({ city, temperature, humidity, weatherCode, windSpeed, windDirection, waveHeight }) {
-    const classes = useStyles();
 
-    const activity = "A good day for activity"; // TODO: change
+    const WeatherCtx = useWeatherContext()
+
 
     return (
         <div className="weather-info">
-            <div className="weather-icon">
-                <WeatherCodeToIcon weatherCode={weatherCode} />
+            <div className="flex-box">
+                <div className="weather-icon weather-icon-drop-shadow">
+                    <WeatherCodeToIcon weatherCode={weatherCode} />
+                </div>
+
+                <p className="city-name">{city}</p>
+                <p className="temperature">{formatTemp(
+                    temperature,
+                    WeatherCtx.units.get
+                )}</p>
             </div>
-
-            <p className="city-name">{city}</p>
-            <p className="temperature">{temperature}°C</p>
-
-            <div className="wind-info">
-                {windSpeed} kts
-                <svg
-                    viewBox="0 0 24 24"
-                    width={24}
-                    height={24}
-                    style={{ transform: `rotate(${windDirection}deg)` }}
-                >
-                    <path
-                        fill="currentColor"
-                        d="M5.414 10H18a1 1 0 0 1 0 2H5.414l4.293 4.293a1 1 0 1 1-1.414 1.414l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 1 1 1.414 1.414L5.414 10z"
-                    />
-                </svg>
-            </div>
-
-            <p className="wave-height">Wave Height: {waveHeight}</p>
         </div>
-
     );
 }
 

@@ -66,7 +66,6 @@ function App() {
 
 
             setWeather({ weatherData });
-            console.log(weather);
             setCity({ cityName });
             setErrorMessage(""); // Clear any previous error messages
 
@@ -141,6 +140,7 @@ function App() {
         const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
 
         const response = await axios.get(url);
+        console.log(response.data)
 
         // Check if there are any results, otherwise throw an error
         if (response.data.results.length === 0) {

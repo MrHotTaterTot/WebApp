@@ -1,37 +1,30 @@
 .weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    position: center;
 }
-
+.flex-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 2.22vw;
+}
 .weather-icon {
-    width: 35vw;
-    max-width: 200px;
+    width: 20vw;
+    margin-bottom: 4vw;
 }
 
 .city-name {
-    font-size: 8vw;
-    margin-top: -1vw;
-    font-weight: bolder;
+    font-size: 11vw;
+    margin: -5vw;
 }
 
 .temperature {
-    font-size: 7vw;
-    margin-top: -2vw;
-    font-weight: normal;
-}
-
-.wind-info {
-    font-size: 5vw;
-    margin-top: -2vw;
-    font-weight: normal;
-    display: flex;
-    align-items: center;
+    font-size: 10vw;
+    margin-bottom: 0;
 }
 
 .wave-height {
-    font-size: 5vw;
-    margin-top: 2vw;
-    font-weight: normal;
+    margin-top: 2.22vw;
 }
 
